@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLICITUD NOM-001-SEDE-2012</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; font-size: 11pt; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 30px; }
+        h3 { font-size: 12pt; font-weight: bold; margin: 25px 0 15px 0; background: #e8e8e8; padding: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 2px solid #000; }
+        td, th { border: 1px solid #000; padding: 6px 8px; vertical-align: middle; font-size: 10pt; }
+        .label-cell { font-weight: bold; background: #f5f5f5; }
+        .admin-field { background: #fffacd !important; }
+        input[type="text"], input[type="date"], input[type="number"], input[type="email"], input[type="tel"], select {
+            width: 100%; border: none; background: white; padding: 4px; font-size: 10pt; font-family: Arial, sans-serif;
+        }
+        input:focus, select:focus { outline: 2px solid #4a90e2; background: #fffef0; }
+        .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; padding: 4px 0; }
+        .checkbox-item { display: inline-flex; align-items: center; gap: 6px; margin-right: 15px; }
+        .checkbox-item input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+        .checkbox-item label { font-weight: normal; font-size: 10pt; cursor: pointer; margin: 0; }
+        .notes { margin-top: 0; padding-top: 0; font-size: 10pt; line-height: 1.6; }
+        .notes strong { display: block; margin-top: 0; margin-bottom: 2px; }
+        .notes ul { margin-top: 0; margin-bottom: 0; margin-left: 10px; padding-left: 15px; }        
+        .notes li { margin-bottom: 6px; }
+        .signature-section { margin-top: 80px; text-align: center; font-weight: bold; }
+        .signature-line { border-top: 2px solid #000; width: 300px; margin: 50px auto 10px auto; }
+        .btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+        .btn { padding: 15px 40px; border: none; border-radius: 5px; font-size: 14pt; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+        .btn-primary { background: #4a90e2; color: white; }
+        .btn-warning { background: #ffc107; color: #000; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .message { padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center; display: none; font-weight: bold; }
+        .success { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 2px solid #bee5eb; }
+        
+        @media screen and (max-width: 768px) {
+            body { padding: 10px; font-size: 10pt; }
+            .container { padding: 20px; }
+            h1 { font-size: 14pt; }
+            h3 { font-size: 11pt; }
+            table { font-size: 9pt; display: block; overflow-x: auto; }
+            td, th { padding: 4px 6px; }
+            input, select { font-size: 14px; padding: 8px; }
+            .btn { padding: 12px 25px; font-size: 12pt; width: 100%; }
+            .checkbox-item label { font-size: 9pt; }
+        }
+        
+        @media print { .btn-group, .message { display: none; } body { background: white; padding: 0; } .container { box-shadow: none; } }
+        
+        .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; }
+        .loading-content { background: white; padding: 30px; border-radius: 10px; text-align: center; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #4a90e2; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 40px; border-radius: 12px; max-width: 600px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        .modal-content h2 { color: #667eea; margin-bottom: 20px; }
+        .modal-content p { margin-bottom: 15px; line-height: 1.6; }
+        .modal-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 25px; }
+        .admin-note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 15px 0; font-size: 9pt; }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p id="loadingText">Procesando...</p>
+        </div>
+    </div>
+
+    <!-- Modal Aviso de Privacidad -->
+    <div class="modal" id="privacyModal">
+        <div class="modal-content">
+            <h2>📋 AVISO DE PRIVACIDAD Y CONFIDENCIALIDAD</h2>
+            <p><strong>UNIDAD DE INSPECCIÓN ING. LENIN NAVA SARTILLO</strong></p>
+            <p>Sus datos personales serán tratados de forma confidencial conforme a la <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares</strong>.</p>
+            <p>Los datos proporcionados serán utilizados <strong>únicamente</strong> para:</p>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li>Evaluación de conformidad NOM-001-SEDE-2012</li>
+                <li>Emisión de dictámenes técnicos</li>
+                <li>Comunicación relacionada con el servicio</li>
+            </ul>
+            <p><strong>¿Confirma que los datos proporcionados son correctos y autoriza su tratamiento?</strong></p>
+            <div class="modal-buttons">
+                <button class="btn btn-warning" onclick="cancelarEnvio()">❌ Cancelar</button>
+                <button class="btn btn-primary" onclick="confirmarEnvio()">✅ Acepto y Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="formContainer">
+        <div style="text-align:center;">
+            <p><strong>EVALUACIÓN DE LA CONFORMIDAD LA NORMA NOM-001-SEDE-2012</strong></p>
+            <p><strong>UNIDAD DE INSPECCIÓN ING. LENIN NAVA SARTILLO</strong></p>
+        </div>
+        <br><h1>DATOS DEL SERVICIO</h1><br>
+
+        <div class="message success" id="successMsg">✓ Formulario enviado exitosamente</div>
+        <div class="message error" id="errorMsg">✗ Error al enviar. Intente nuevamente.</div>
+        <div class="message info" id="infoMsg">ℹ Información</div>
+
+        <div class="admin-note">
+            <strong>Nota:</strong> Los campos con fondo amarillo son de uso administrativo. Puede dejarlos vacíos, serán completados por el personal autorizado.
+        </div>
+
+        <form id="serviceForm">
+            <h3>INFORMACIÓN GENERAL DEL SERVICIO</h3>
+            <table>
+                <tr>
+                    <td class="label-cell" style="width:18%;">NOMBRE O RAZÓN SOCIAL:</td>
+                    <td colspan="5"><input type="text" name="razon_social" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell admin-field">NÚMERO DE CONTRATO:</td>
+                    <td style="width:15%;" class="admin-field"><input type="text" name="numero_contrato" id="numero_contrato" class="admin-field" placeholder="(Uso administrativo)"></td>
+                    <td class="label-cell" style="width:18%;">FECHA DE SOLICITUD:</td>
+                    <td style="width:15%;"><input type="date" name="fecha_solicitud" required></td>
+                    <td class="label-cell" style="width:18%;">FECHA FIRMA DE CONTRATO:</td>
+                    <td style="width:16%;"><input type="date" name="fecha_firma"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">NOMBRE COMERCIAL (en su caso):</td>
+                    <td colspan="5"><input type="text" name="nombre_comercial"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">RFC (Personas Morales):</td>
+                    <td colspan="5"><input type="text" name="rfc" placeholder="Ej: ABC123456XYZ" required style="text-transform:uppercase;"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">IDENTIFICACIÓN (Personas Físicas):</td>
+                    <td style="width:20%;">
+                        <select name="tipo_identificacion" required>
+                            <option value="">Seleccione...</option>
+                            <option value="INE/IFE">INE/IFE</option>
+                            <option value="CURP">CURP</option>
+                            <option value="Cartilla Militar">Cartilla Militar</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                            <option value="Forma Migratoria">Forma Migratoria</option>
+                        </select>
+                    </td>
+                    <td class="label-cell">CLAVE DE IDENTIFICACIÓN:</td>
+                    <td colspan="3"><input type="text" name="clave_identificacion" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">CLASIFICACIÓN DE LA ACTIVIDAD CONFORME AL SCIAN:</td>
+                    <td colspan="5">
+                        <input type="text" name="clasificacion_scian" placeholder="Código SCIAN" required>
+                        <a href="https://www.inegi.org.mx/scian/" target="_blank" style="color:#4a90e2;font-size:9pt;text-decoration:none;margin-left:10px;">📋 Consultar</a>
+                    </td>
+                </tr>
+            </table>
+
+            <h3>DOMICILIO Y CONTACTO DE LA INSTALACIÓN A VERIFICAR</h3>
+            <table>
+                <tr>
+                    <td class="label-cell" style="width:18%;">CALLE:</td>
+                    <td colspan="5"><input type="text" name="calle" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">NÚMERO EXTERIOR:</td>
+                    <td style="width:15%;"><input type="text" name="num_exterior" required></td>
+                    <td class="label-cell" style="width:18%;">NÚMERO INTERIOR:</td>
+                    <td colspan="3"><input type="text" name="num_interior"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">COLONIA O POBLACIÓN:</td>
+                    <td colspan="5"><input type="text" name="colonia" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">MUNICIPIO O ALCALDÍA:</td>
+                    <td colspan="5"><input type="text" name="municipio" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">CÓDIGO POSTAL:</td>
+                    <td style="width:12%;"><input type="text" name="codigo_postal" pattern="[0-9]{5}" maxlength="5" placeholder="00000" required></td>
+                    <td class="label-cell">ENTIDAD FEDERATIVA:</td>
+                    <td colspan="3">
+                        <select name="estado" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Aguascalientes">Aguascalientes</option>
+                            <option value="Baja California">Baja California</option>
+                            <option value="Baja California Sur">Baja California Sur</option>
+                            <option value="Campeche">Campeche</option>
+                            <option value="Chiapas">Chiapas</option>
+                            <option value="Chihuahua">Chihuahua</option>
+                            <option value="Ciudad de México">Ciudad de México</option>
+                            <option value="Coahuila">Coahuila</option>
+                            <option value="Colima">Colima</option>
+                            <option value="Durango">Durango</option>
+                            <option value="Guanajuato">Guanajuato</option>
+                            <option value="Guerrero">Guerrero</option>
+                            <option value="Hidalgo">Hidalgo</option>
+                            <option value="Jalisco">Jalisco</option>
+                            <option value="Estado de México">Estado de México</option>
+                            <option value="Michoacán">Michoacán</option>
+                            <option value="Morelos">Morelos</option>
+                            <option value="Nayarit">Nayarit</option>
+                            <option value="Nuevo León">Nuevo León</option>
+                            <option value="Oaxaca">Oaxaca</option>
+                            <option value="Puebla">Puebla</option>
+                            <option value="Querétaro">Querétaro</option>
+                            <option value="Quintana Roo">Quintana Roo</option>
+                            <option value="San Luis Potosí">San Luis Potosí</option>
+                            <option value="Sinaloa">Sinaloa</option>
+                            <option value="Sonora">Sonora</option>
+                            <option value="Tabasco">Tabasco</option>
+                            <option value="Tamaulipas">Tamaulipas</option>
+                            <option value="Tlaxcala">Tlaxcala</option>
+                            <option value="Veracruz">Veracruz</option>
+                            <option value="Yucatán">Yucatán</option>
+                            <option value="Zacatecas">Zacatecas</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label-cell">NÚMERO TELEFÓNICO:</td>
+                    <td style="width:20%;"><input type="tel" name="telefono_instalacion" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" required></td>
+                    <td class="label-cell">CORREO ELECTRÓNICO:</td>
+                    <td colspan="3"><input type="email" name="email_instalacion" required></td>
+                </tr>
+            </table>
+
+            <h3>DATOS DEL CLIENTE QUE FIRMA EL CONTRATO</h3>
+            <table>
+                <tr>
+                    <td class="label-cell" style="width:18%;">NOMBRE:</td>
+                    <td colspan="5"><input type="text" name="nombre_firma" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">NÚMERO TELEFÓNICO:</td>
+                    <td style="width:20%;"><input type="tel" name="telefono_firma" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" required></td>
+                    <td class="label-cell" style="width:18%;">CORREO ELECTRÓNICO:</td>
+                    <td colspan="3"><input type="email" name="email_firma" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">IDENTIFICACIÓN:</td>
+                    <td>
+                        <select name="tipo_id_firma" required>
+                            <option value="">Seleccione...</option>
+                            <option value="INE/IFE">INE/IFE</option>
+                            <option value="CURP">CURP</option>
+                            <option value="Cartilla Militar">Cartilla Militar</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                            <option value="Forma Migratoria">Forma Migratoria</option>
+                        </select>
+                    </td>
+                    <td class="label-cell">CLAVE DE IDENTIFICACIÓN:</td>
+                    <td colspan="3"><input type="text" name="clave_id_firma" required></td>
+                </tr>
+            </table>
+
+            <h3>DATOS DE LA PERSONA QUE ATIENDE LAS VISITAS DE PARTE DEL CLIENTE</h3>
+            <table>
+                <tr>
+                    <td class="label-cell" style="width:18%;">NOMBRE:</td>
+                    <td colspan="5"><input type="text" name="nombre_inspeccion" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">NÚMERO TELEFÓNICO:</td>
+                    <td style="width:20%;"><input type="tel" name="telefono_inspeccion" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" required></td>
+                    <td class="label-cell" style="width:18%;">CORREO ELECTRÓNICO:</td>
+                    <td colspan="3"><input type="email" name="email_inspeccion" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">IDENTIFICACIÓN:</td>
+                    <td>
+                        <select name="tipo_id_inspeccion" required>
+                            <option value="">Seleccione...</option>
+                            <option value="INE/IFE">INE/IFE</option>
+                            <option value="CURP">CURP</option>
+                            <option value="Cartilla Militar">Cartilla Militar</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                            <option value="Forma Migratoria">Forma Migratoria</option>
+                        </select>
+                    </td>
+                    <td class="label-cell">CLAVE DE IDENTIFICACIÓN:</td>
+                    <td colspan="3"><input type="text" name="clave_id_inspeccion" required></td>
+                </tr>
+            </table>
+
+            <h3>DATOS DE LA PERSONA QUE SOLICITA LA INSPECCIÓN</h3>
+            <table>
+                <tr>
+                    <td class="label-cell" style="width:18%;">NOMBRE:</td>
+                    <td colspan="5"><input type="text" name="solicitante_nombre" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">NÚMERO TELEFÓNICO:</td>
+                    <td style="width:20%;"><input type="tel" name="solicitante_telefono" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" required></td>
+                    <td class="label-cell" style="width:18%;">CORREO ELECTRÓNICO:</td>
+                    <td colspan="3"><input type="email" name="solicitante_email" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">IDENTIFICACIÓN:</td>
+                    <td>
+                        <select name="solicitante_tipo_id" required>
+                            <option value="">Seleccione...</option>
+                            <option value="INE/IFE">INE/IFE</option>
+                            <option value="CURP">CURP</option>
+                            <option value="Cartilla Militar">Cartilla Militar</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                            <option value="Forma Migratoria">Forma Migratoria</option>
+                        </select>
+                    </td>
+                    <td class="label-cell">CLAVE DE IDENTIFICACIÓN:</td>
+                    <td colspan="3"><input type="text" name="solicitante_clave_id" required></td>
+                </tr>
+            </table>
+
+            <h3>CARACTERÍSTICAS DE LA INSTALACIÓN</h3>
+            <table>
+                <tr>
+                    <td class="label-cell" style="width:18%;">CARGA INSTALADA EN KW:</td>
+                    <td style="width:15%;"><input type="number" step="0.01" name="carga_instalada" placeholder="0.00" required></td>
+                    <td class="label-cell" style="width:18%;">TENSIÓN DE SUMINISTRO:</td>
+                    <td colspan="3"><input type="text" name="tension_suministro" placeholder="Ej: 220V" required></td>
+                </tr>
+                <tr>
+                    <td class="label-cell">ALCANCE EN KW:</td>
+                    <td><input type="number" step="0.01" name="alcance_kw" placeholder="0.00" required></td>
+                    <td class="label-cell">CAPACIDAD DE LA SUBESTACIÓN KVA (si está en el alcance):</td>
+                    <td colspan="3"><input type="number" step="0.01" name="capacidad_subestacion" placeholder="0.00"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell" style="vertical-align:top;">TIPO DE INSTALACIÓN:</td>
+                    <td colspan="5">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="tipo_concentracion" id="tipo_concentracion">
+                                <label for="tipo_concentracion">LUGAR DE CONCENTRACIÓN PÚBLICA</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="tipo_peligrosa" id="tipo_peligrosa">
+                                <label for="tipo_peligrosa">ÁREA PELIGROSA</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="tipo_industria" id="tipo_industria">
+                                <label for="tipo_industria">INDUSTRIA</label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label-cell">OTRO:</td>
+                    <td colspan="5"><input type="text" name="tipo_otro"></td>
+                </tr>
+                <tr>
+                    <td class="label-cell" style="vertical-align:top;">TIPO DE VERIFICACIÓN:</td>
+                    <td colspan="5">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="verif_nueva" id="verif_nueva">
+                                <label for="verif_nueva">INSTALACIÓN NUEVA</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="verif_ampliacion" id="verif_ampliacion">
+                                <label for="verif_ampliacion">AMPLIACIÓN DE INSTALACIÓN</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="verif_modificacion" id="verif_modificacion">
+                                <label for="verif_modificacion">MODIFICACIÓN DE INSTALACIÓN</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="verif_periodica" id="verif_periodica">
+                                <label for="verif_periodica">PERIÓDICA DE UNA INSTALACIÓN CON ÁREAS PELIGROSAS</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="verif_antes_nom" id="verif_antes_nom">
+                                <label for="verif_antes_nom">CONSTRUIDA ANTES DE NOM 001 SEDE 2012</label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="notes">
+                <strong>Notas:</strong>
+                <ul>
+                    <li>Marque el recuadro del Tipo de Instalación y Tipo de Verificación correspondiente.</li>
+                    <li>Número de identificación: Clave única de registro de población (CURP), clave de elector de la credencial para votar, matrícula de cartilla militar o número de pasaporte. En caso de ser extranjero el folio de la Forma Migratoria.</li>
+                </ul>
+            </div>
+
+            <div class="signature-section">
+                <div class="signature-line"></div>
+                <p>FIRMA DEL SOLICITANTE</p>
+            </div>
+
+            <br><br>
+            <table border="1" cellpadding="5" cellspacing="0">
+                <tr>
+                    <th>CÓDIGO: F-1</th>
+                    <th class="admin-field">REVISIÓN: <input type="text" name="revision" class="admin-field" placeholder="(Admin)" style="width:60px;border:none;background:transparent;"></th>
+                    <th class="admin-field">VIGENTE: <input type="text" name="vigente" class="admin-field" placeholder="(Admin)" style="width:60px;border:none;background:transparent;"></th>
+                    <th>PÁGINA: 1/1</th>
+                    <th class="admin-field">FECHA: <input type="date" name="fecha_tabla" class="admin-field" style="width:110px;border:none;background:transparent;"></th>
+                    <th>ORIGEN: INTERNO</th>
+                </tr>
+            </table>
+            <br>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-warning" onclick="guardarProgreso()">💾 Guardar Progreso</button>
+                <button type="button" class="btn btn-primary" onclick="intentarEnviar()">📤 Enviar Solicitud</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // ========== CONFIGURACIÓN ==========
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyehK_ouWflv3cojYqdbtPUeRvhRV1YbE6xLtRhKdBrAbSm2gQNIaRn62oUJC-BjZa2Sw/exec';
+
+        // ========== INICIALIZACIÓN ==========
+        window.addEventListener('load', function() {
+            cargarProgresoLocal();
+            setInterval(autoGuardar, 60000);
+        });
+
+        // RFC en mayúsculas
+        document.querySelector('input[name="rfc"]').addEventListener('input', function(e) {
+            e.target.value = e.target.value.toUpperCase();
+        });
+
+        // ========== FUNCIONES PRINCIPALES ==========
+        function intentarEnviar() {
+            const form = document.getElementById('serviceForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            document.getElementById('privacyModal').style.display = 'flex';
+        }
+
+        function cancelarEnvio() {
+            document.getElementById('privacyModal').style.display = 'none';
+        }
+
+        async function confirmarEnvio() {
+            document.getElementById('privacyModal').style.display = 'none';
+            showLoading('Enviando solicitud...');
+            
+            try {
+                const data = getData();
+                console.log('Enviando datos:', data);
+                
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                localStorage.removeItem('form_progress');
+                showMsg('success', '✓ Solicitud enviada exitosamente. Recibirá confirmación por email.');
+                document.getElementById('serviceForm').reset();
+                
+            } catch (err) {
+                console.error('Error:', err);
+                showMsg('error', '✗ Error al enviar: ' + err.message);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // ========== OBTENER DATOS DEL FORMULARIO ==========
+        function getData() {
+            const form = document.getElementById('serviceForm');
+            const data = { timestamp: new Date().toISOString() };
+            
+            // Obtener todos los elementos del formulario
+            const elements = form.querySelectorAll('input, select, textarea');
+            
+            elements.forEach(el => {
+                if (!el.name) return;
+                
+                if (el.type === 'checkbox') {
+                    data[el.name] = el.checked;
+                } else {
+                    data[el.name] = el.value.trim();
+                }
+            });
+            
+            return data;
+        }
+
+        // ========== GUARDAR/CARGAR PROGRESO ==========
+        function guardarProgreso() {
+            try {
+                const data = getData();
+                localStorage.setItem('form_progress', JSON.stringify(data));
+                showMsg('info', '💾 Progreso guardado correctamente');
+            } catch (err) {
+                console.error('Error al guardar:', err);
+                showMsg('error', 'Error al guardar progreso');
+            }
+        }
+
+        function autoGuardar() {
+            const razonSocial = document.querySelector('input[name="razon_social"]');
+            if (razonSocial && razonSocial.value.trim()) {
+                try {
+                    const data = getData();
+                    localStorage.setItem('form_progress', JSON.stringify(data));
+                } catch (err) {
+                    console.error('Error en autoguardado:', err);
+                }
+            }
+        }
+
+        function cargarProgresoLocal() {
+            const saved = localStorage.getItem('form_progress');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    loadData(data);
+                    showMsg('info', 'ℹ️ Progreso anterior cargado.');
+                } catch (err) {
+                    console.error('Error loading progress:', err);
+                }
+            }
+        }
+
+        function loadData(data) {
+            Object.keys(data).forEach(key => {
+                if (key === 'timestamp') return;
+                
+                const el = document.querySelector(`[name="${key}"]`);
+                if (!el) return;
+                
+                if (el.type === 'checkbox') {
+                    el.checked = data[key] === true || data[key] === 'true';
+                } else {
+                    el.value = data[key] || '';
+                }
+            });
+        }
+
+        // ========== MENSAJES Y UI ==========
+        function showMsg(type, msg) {
+            document.getElementById('successMsg').style.display = 'none';
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('infoMsg').style.display = 'none';
+            
+            const el = document.getElementById(type + 'Msg');
+            if (el) {
+                el.textContent = msg;
+                el.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(() => el.style.display = 'none', 5000);
+            }
+        }
+
+        function showLoading(txt) {
+            document.getElementById('loadingText').textContent = txt;
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
