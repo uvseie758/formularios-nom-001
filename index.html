@@ -182,8 +182,13 @@
                     <td colspan="5"><input type="text" name="nombre_comercial"></td>
                 </tr>
                 <tr>
-                    <td class="label-cell">RFC (Personas Morales):</td>
-                    <td colspan="5"><input type="text" name="rfc" placeholder="En caso de ser personas morales sólo se requiere RFC, para personas físicas INE y clave." required ></td>
+                    <td class="label-cell">RFC:</td>
+                    <td colspan="5">
+                        <input type="text" name="rfc" required>
+                        <div style="font-size: 9pt; color: #666; font-style: italic; margin-top: 3px;">
+                            Personas Morales solo requieren RFC. Personas Físicas requieren INE y clave de elector.
+                        </div>
+                    </td> 
                 </tr>
                 <tr>
                     <td class="label-cell">IDENTIFICACIÓN (Personas Físicas):</td>
