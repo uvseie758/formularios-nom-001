@@ -39,16 +39,69 @@
         .error { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
         .info { background: #d1ecf1; color: #0c5460; border: 2px solid #bee5eb; }
         
+        /* TABLETS (769px - 1024px) */
+        @media screen and (max-width: 1024px) {
+            .container { padding: 25px; }
+            table { font-size: 9.5pt; }
+            td, th { padding: 5px 7px; }
+        }
+
+        /* MÓVILES Y TABLETS PEQUEÑAS (hasta 768px) */
         @media screen and (max-width: 768px) {
-            body { padding: 10px; font-size: 10pt; }
-            .container { padding: 20px; }
-            h1 { font-size: 14pt; }
-            h3 { font-size: 11pt; }
-            table { font-size: 9pt; display: block; overflow-x: auto; }
-            td, th { padding: 4px 6px; }
-            input, select { font-size: 14px; padding: 8px; }
-            .btn { padding: 12px 25px; font-size: 12pt; width: 100%; }
-            .checkbox-item label { font-size: 9pt; }
+            body { padding: 8px; font-size: 10pt; }
+            .container { padding: 15px; box-shadow: none; }
+            h1 { font-size: 13pt; line-height: 1.4; }
+            h3 { font-size: 10pt; padding: 6px; }
+
+            /* Tablas: cada fila se convierte en bloque */
+            table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid #000; }
+            thead { display: none; }
+            tr { display: block; border-bottom: 2px solid #ccc; margin-bottom: 8px; }
+            td, th {
+                display: block;
+                width: 100% !important;
+                border: none;
+                border-bottom: 1px solid #ddd;
+                padding: 6px 8px;
+                font-size: 10pt;
+            }
+            .label-cell { background: #e8e8e8; font-weight: bold; font-size: 9pt; padding: 4px 8px; }
+
+            /* Inputs más grandes para pantalla táctil */
+            input[type="text"], input[type="date"], input[type="number"],
+            input[type="email"], input[type="tel"], select {
+                font-size: 16px; /* evita zoom automático en iOS */
+                padding: 10px 8px;
+                width: 100%;
+            }
+
+            /* Checkboxes más grandes */
+            .checkbox-group { flex-direction: column; gap: 10px; }
+            .checkbox-item { gap: 10px; }
+            .checkbox-item input[type="checkbox"] { width: 20px; height: 20px; }
+            .checkbox-item label { font-size: 10pt; }
+
+            /* Botones a ancho completo */
+            .btn-group { flex-direction: column; gap: 10px; }
+            .btn { padding: 14px 20px; font-size: 12pt; width: 100%; text-align: center; }
+
+            /* Modal responsive */
+            .modal-content { padding: 20px; margin: 10px; max-width: 100%; }
+            .modal-buttons { flex-direction: column; gap: 10px; }
+            .modal-buttons .btn { width: 100%; }
+
+            /* Tabla de encabezado (CÓDIGO, REVISIÓN, etc.) */
+            table[border="1"] tr { display: flex; flex-wrap: wrap; }
+            table[border="1"] th { flex: 1 1 45%; font-size: 9pt; padding: 4px; }
+        }
+
+        /* MÓVILES MUY PEQUEÑOS (hasta 400px) */
+        @media screen and (max-width: 400px) {
+            body { padding: 4px; }
+            .container { padding: 10px; }
+            h1 { font-size: 11pt; }
+            td, th { font-size: 9pt; }
+            .btn { font-size: 11pt; padding: 12px; }
         }
         
         @media print { .btn-group, .message { display: none; } body { background: white; padding: 0; } .container { box-shadow: none; } }
@@ -130,7 +183,7 @@
                 </tr>
                 <tr>
                     <td class="label-cell">RFC (Personas Morales):</td>
-                    <td colspan="5"><input type="text" name="rfc" placeholder="Ej: ABC123456XYZ" required style="text-transform:uppercase;"></td>
+                    <td colspan="5"><input type="text" name="rfc" placeholder="En caso de ser personas morales sólo se requiere RFC, para personas físicas INE y clave." required ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">IDENTIFICACIÓN (Personas Físicas):</td>
@@ -393,17 +446,21 @@
             </div>
 
             <br><br>
-            <table border="1" cellpadding="5" cellspacing="0">
+            <table border="1" cellpadding="5" cellspacing="0" style="margin-bottom: 0;">
                 <tr>
                     <th>CÓDIGO: F-1</th>
                     <th class="admin-field">REVISIÓN: <input type="text" name="revision" class="admin-field" placeholder="(Admin)" style="width:60px;border:none;background:transparent;"></th>
                     <th class="admin-field">VIGENTE: <input type="text" name="vigente" class="admin-field" placeholder="(Admin)" style="width:60px;border:none;background:transparent;"></th>
-                    <th>PÁGINA: 1/1</th>
-                    <th class="admin-field">FECHA: <input type="date" name="fecha_tabla" class="admin-field" style="width:110px;border:none;background:transparent;"></th>
+                    <th class="admin-field">PÁGINA: <input type="text" name="pagina" class="admin-field" placeholder="1/1" style="width:50px;border:none;background:transparent;"></th>
+                    <th class="admin-field">FECHA: <input type="text" name="fecha_tabla" class="admin-field" placeholder="dd/mm/aaaa" style="width:110px;border:none;background:transparent;"></th>
                     <th>ORIGEN: INTERNO</th>
                 </tr>
+                </tr>
             </table>
-            <br>
+            <div style="font-size: 9pt; color: #666; font-style: italic; margin: 0; padding: 0;">
+              <strong>Nota:</strong> Estos datos son únicos, son de uso administrativo. Puede dejarlos vacíos, serán completados por el personal autorizado.
+            </div>
+            </table>
 
             <div class="btn-group">
                 <button type="button" class="btn btn-warning" onclick="guardarProgreso()">💾 Guardar Progreso</button>
@@ -414,7 +471,7 @@
 
     <script>
         // ========== CONFIGURACIÓN ==========
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkQsjPRWDyHwcCO-E4srlJaytUy2pco5zr1_CAyjV7E_jJD-Mpzvj-ksp4XkaJaulKvA/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZe3f7A1FdKxoXFJDNlOjYEeELpI3Gb4Qx58Rjen4cbR6hDZnxXmRlOV3vm36eQ0qAng/exec';
 
         // ========== INICIALIZACIÓN ==========
         window.addEventListener('load', function() {
