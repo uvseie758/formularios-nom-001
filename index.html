@@ -170,7 +170,7 @@
             <strong>Nota:</strong> Los campos con fondo amarillo son de uso administrativo. Puede dejarlos vacíos, serán completados por el personal autorizado.
         </div>
 
-        <form id="serviceForm"autocomplete="off">
+        <form id="serviceForm" autocomplete="off">
             <h3>INFORMACIÓN GENERAL DEL SERVICIO</h3>
             <table>
                 <tr>
@@ -622,7 +622,7 @@
                 el.textContent = msg;
                 el.style.display = 'block';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                setTi   meout(() => el.style.display = 'none', 5000);
+                setTimeout(() => el.style.display = 'none', 5000);
             }
         }
 
@@ -637,4 +637,3 @@
     </script>
 </body>
 </html>	
-
