@@ -175,13 +175,13 @@
             <table>
                 <tr>
                     <td class="label-cell" style="width:18%;">NOMBRE O RAZÓN SOCIAL:</td>
-                    <td colspan="5"><input type="text" name="razon_social" required></td>
+                    <td colspan="5"><input type="text" name="razon_social" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell admin-field">NÚMERO DE CONTRATO:</td>
                     <td style="width:15%;" class="admin-field"><input type="text" name="numero_contrato" id="numero_contrato" class="admin-field" placeholder="(Uso administrativo)"></td>
                     <td class="label-cell" style="width:18%;">FECHA DE SOLICITUD:</td>
-                    <td style="width:15%;"><input type="date" name="fecha_solicitud" required></td>
+                    <td style="width:15%;"><input type="date" name="fecha_solicitud" ></td>
                     <td class="label-cell" style="width:18%;">FECHA FIRMA DE CONTRATO:</td>
                     <td style="width:16%;"><input type="date" name="fecha_firma"></td>
                 </tr>
@@ -192,7 +192,7 @@
                 <tr>
                     <td class="label-cell">RFC (Personas morales):</td>
                     <td colspan="5">
-                        <input type="text" name="rfc" required>
+                        <input type="text" name="rfc" >
                         <div style="font-size: 9pt; color: #666; font-style: italic; margin-top: 3px;">
                             Personas Morales solo requieren RFC. Personas Físicas requieren INE y clave de elector.
                         </div>
@@ -212,12 +212,12 @@
                         </select>
                     </td>
                     <td class="label-cell">CLAVE DE IDENTIFICACIÓN:</td>
-                    <td colspan="3"><input type="text" name="clave_identificacion" required></td>
+                    <td colspan="3"><input type="text" name="clave_identificacion" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">CLASIFICACIÓN DE LA ACTIVIDAD CONFORME AL SCIAN:</td>
                     <td colspan="5">
-                        <input type="text" name="clasificacion_scian" placeholder="Código SCIAN" required>
+                        <input type="text" name="clasificacion_scian" placeholder="Código SCIAN" >
                         <a href="https://www.inegi.org.mx/scian/" target="_blank" style="color:#4a90e2;font-size:9pt;text-decoration:none;margin-left:10px;">📋 Consultar</a>
                     </td>
                 </tr>
@@ -227,28 +227,28 @@
             <table>
                 <tr>
                     <td class="label-cell" style="width:18%;">CALLE:</td>
-                    <td colspan="5"><input type="text" name="calle" required></td>
+                    <td colspan="5"><input type="text" name="calle" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">NÚMERO EXTERIOR:</td>
-                    <td style="width:15%;"><input type="text" name="num_exterior" required></td>
+                    <td style="width:15%;"><input type="text" name="num_exterior" ></td>
                     <td class="label-cell" style="width:18%;">NÚMERO INTERIOR:</td>
                     <td colspan="3"><input type="text" name="num_interior"></td>
                 </tr>
                 <tr>
                     <td class="label-cell">COLONIA O POBLACIÓN:</td>
-                    <td colspan="5"><input type="text" name="colonia" required></td>
+                    <td colspan="5"><input type="text" name="colonia" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">MUNICIPIO O ALCALDÍA:</td>
-                    <td colspan="5"><input type="text" name="municipio" required></td>
+                    <td colspan="5"><input type="text" name="municipio" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">CÓDIGO POSTAL:</td>
-                    <td style="width:12%;"><input type="text" name="codigo_postal" pattern="[0-9]{5}" maxlength="5" placeholder="00000" required></td>
+                    <td style="width:12%;"><input type="text" name="codigo_postal" pattern="[0-9]{5}" maxlength="5" placeholder="00000" ></td>
                     <td class="label-cell">ENTIDAD FEDERATIVA:</td>
                     <td colspan="3">
-                        <select name="estado" required>
+                        <select name="estado" >
                             <option value="">Seleccione...</option>
                             <option value="Aguascalientes">Aguascalientes</option>
                             <option value="Baja California">Baja California</option>
@@ -287,9 +287,9 @@
                 </tr>
                 <tr>
                     <td class="label-cell">NÚMERO TELEFÓNICO:</td>
-                    <td style="width:20%;"><input type="tel" name="telefono_instalacion" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" required></td>
+                    <td style="width:20%;"><input type="tel" name="telefono_instalacion" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" ></td>
                     <td class="label-cell">CORREO ELECTRÓNICO:</td>
-                    <td colspan="3"><input type="email" name="email_instalacion" required></td>
+                    <td colspan="3"><input type="email" name="email_instalacion" ></td>
                 </tr>
             </table>
 
@@ -297,18 +297,18 @@
             <table>
                 <tr>
                     <td class="label-cell" style="width:18%;">NOMBRE:</td>
-                    <td colspan="5"><input type="text" name="nombre_firma" required></td>
+                    <td colspan="5"><input type="text" name="nombre_firma" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">NÚMERO TELEFÓNICO:</td>
-                    <td style="width:20%;"><input type="tel" name="telefono_firma" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" required></td>
+                    <td style="width:20%;"><input type="tel" name="telefono_firma" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" ></td>
                     <td class="label-cell" style="width:18%;">CORREO ELECTRÓNICO:</td>
-                    <td colspan="3"><input type="email" name="email_firma" required></td>
+                    <td colspan="3"><input type="email" name="email_firma" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">IDENTIFICACIÓN:</td>
                     <td>
-                        <select name="tipo_id_firma" required>
+                        <select name="tipo_id_firma" >
                             <option value="">Seleccione...</option>
                             <option value="INE/IFE">INE/IFE</option>
                             <option value="CURP">CURP</option>
@@ -318,7 +318,7 @@
                         </select>
                     </td>
                     <td class="label-cell">CLAVE DE IDENTIFICACIÓN:</td>
-                    <td colspan="3"><input type="text" name="clave_id_firma" required></td>
+                    <td colspan="3"><input type="text" name="clave_id_firma" ></td>
                 </tr>
             </table>
 
@@ -326,18 +326,18 @@
             <table>
                 <tr>
                     <td class="label-cell" style="width:18%;">NOMBRE:</td>
-                    <td colspan="5"><input type="text" name="nombre_inspeccion" required></td>
+                    <td colspan="5"><input type="text" name="nombre_inspeccion" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">NÚMERO TELEFÓNICO:</td>
-                    <td style="width:20%;"><input type="tel" name="telefono_inspeccion" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" required></td>
+                    <td style="width:20%;"><input type="tel" name="telefono_inspeccion" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" ></td>
                     <td class="label-cell" style="width:18%;">CORREO ELECTRÓNICO:</td>
-                    <td colspan="3"><input type="email" name="email_inspeccion" required></td>
+                    <td colspan="3"><input type="email" name="email_inspeccion" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">IDENTIFICACIÓN:</td>
                     <td>
-                        <select name="tipo_id_inspeccion" required>
+                        <select name="tipo_id_inspeccion" >
                             <option value="">Seleccione...</option>
                             <option value="INE/IFE">INE/IFE</option>
                             <option value="CURP">CURP</option>
@@ -355,18 +355,18 @@
             <table>
                 <tr>
                     <td class="label-cell" style="width:18%;">NOMBRE:</td>
-                    <td colspan="5"><input type="text" name="solicitante_nombre" required></td>
+                    <td colspan="5"><input type="text" name="solicitante_nombre" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">NÚMERO TELEFÓNICO:</td>
-                    <td style="width:20%;"><input type="tel" name="solicitante_telefono" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" required></td>
+                    <td style="width:20%;"><input type="tel" name="solicitante_telefono" pattern="[0-9]{10}" maxlength="10" placeholder="10 dígitos" ></td>
                     <td class="label-cell" style="width:18%;">CORREO ELECTRÓNICO:</td>
-                    <td colspan="3"><input type="email" name="solicitante_email" required></td>
+                    <td colspan="3"><input type="email" name="solicitante_email" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">IDENTIFICACIÓN:</td>
                     <td>
-                        <select name="solicitante_tipo_id" required>
+                        <select name="solicitante_tipo_id" >
                             <option value="">Seleccione...</option>
                             <option value="INE/IFE">INE/IFE</option>
                             <option value="CURP">CURP</option>
@@ -376,7 +376,7 @@
                         </select>
                     </td>
                     <td class="label-cell">CLAVE DE IDENTIFICACIÓN:</td>
-                    <td colspan="3"><input type="text" name="solicitante_clave_id" required></td>
+                    <td colspan="3"><input type="text" name="solicitante_clave_id" ></td>
                 </tr>
             </table>
 
@@ -384,13 +384,13 @@
             <table>
                 <tr>
                     <td class="label-cell" style="width:18%;">CARGA INSTALADA EN KW:</td>
-                    <td style="width:15%;"><input type="number" step="0.01" name="carga_instalada" placeholder="0.00" required></td>
+                    <td style="width:15%;"><input type="number" step="0.01" name="carga_instalada" placeholder="0.00" ></td>
                     <td class="label-cell" style="width:18%;">TENSIÓN DE SUMINISTRO:</td>
-                    <td colspan="3"><input type="text" name="tension_suministro" placeholder="Ej: 220V" required></td>
+                    <td colspan="3"><input type="text" name="tension_suministro" placeholder="Ej: 220V" ></td>
                 </tr>
                 <tr>
                     <td class="label-cell">ALCANCE EN KW:</td>
-                    <td><input type="number" step="0.01" name="alcance_kw" placeholder="0.00" required></td>
+                    <td><input type="number" step="0.01" name="alcance_kw" placeholder="0.00" ></td>
                     <td class="label-cell">CAPACIDAD DE LA SUBESTACIÓN KVA (si está en el alcance):</td>
                     <td colspan="3"><input type="number" step="0.01" name="capacidad_subestacion" placeholder="0.00"></td>
                 </tr>
